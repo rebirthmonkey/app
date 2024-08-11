@@ -1,0 +1,33 @@
+stages:
+  - prepare
+  - build
+
+# Job to prepare the Docker credentials file
+prepare_docker_credentials:
+  stage: prepare
+  image: alpine:latest
+  # A dedicated GitLab user with write access to the GitLab Registry registry.gitlab.rebirthmonkey.com, with the username "ci", has been created
+  # The GitLab user's username and password (access token) are stored in CI/CD environment variables:
+  #   https://gitlab.gitlab.rebirthmonkey.com/groups/default/-/settings/ci_cd
+  #     CI_REGISTRY_USER: ci
+  #     CI_REGISTRY_PASSWORD: glpat-ZAaCmDnzrQ6-fJujmLdq
+  script:
+    - mkdir -p /kaniko/.docker/
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\",\"auth\":\"$(echo -n $CI_REGISTRY_USER:$CI_REGISTRY_PASSWORD | base64)\"}}}" > config.json
+  artifacts:
+    paths:
+      - config.json  # Save the Docker config as an artifact
+
+build_image:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    # Copy config.json to the default credential location for kaniko
+    # This is actually unnecessary, when using Gitlab Registry, no credentials are needed
+    - mv config.json /kaniko/.docker/config.json
+    - cat /kaniko/.docker/config.json
+    - /kaniko/executor --dockerfile=Dockerfile --context=$(pwd)/frontend --destination=registry.gitlab.rebirthmonkey.com/lab/app/frontend:latest
+
+
