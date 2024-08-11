@@ -29,6 +29,7 @@ build_image:
     - mv config.json /kaniko/.docker/config.json
     - cat /kaniko/.docker/config.json
     - /kaniko/executor --dockerfile=Dockerfile --context=$(pwd)/frontend --destination=registry.gitlab.rebirthmonkey.com/lab/app/frontend:latest
+    - /kaniko/executor --dockerfile=Dockerfile --context=$(pwd)/bacnend --destination=registry.gitlab.rebirthmonkey.com/lab/app/backend:latest
 
 
 
