@@ -1,0 +1,16 @@
+frontend:
+  image: registry.gitlab.rebirthmonkey.com/lab/app/frontend
+  tag: 'latest'
+  autoscaling:
+    averageUtilization: 90
+backend:
+  image: registry.gitlab.rebirthmonkey.com/lab/app/backend
+  tag: 'latest'
+  autoscaling:
+    averageUtilization: 90
+database:
+  enabled: true
+  uri: pg-service
+  username: postgres
+  password: postgres
+  
