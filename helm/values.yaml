@@ -1,11 +1,11 @@
 frontend:
   image: registry.gitlab.rebirthmonkey.com/lab/app/frontend
-  tag: 'latest'
+  tag: TAG_TO_BE_REPLACED
   autoscaling:
     averageUtilization: 90
 backend:
   image: registry.gitlab.rebirthmonkey.com/lab/app/backend
-  tag: 'latest'
+  tag: TAG_TO_BE_REPLACED
   autoscaling:
     averageUtilization: 90
 database:
