@@ -31,3 +31,4 @@ build_image:
     - /kaniko/executor --dockerfile=Dockerfile --context=$(pwd)/frontend --destination=registry.gitlab.rebirthmonkey.com/lab/app/frontend:latest
 
 
+
