@@ -28,8 +28,7 @@ build_image:
     # This is actually unnecessary, when using Gitlab Registry, no credentials are needed
     - mv config.json /kaniko/.docker/config.json
     - cat /kaniko/.docker/config.json
-    - /kaniko/executor --dockerfile=Dockerfile --context=$(pwd)/frontend --destination=registry.gitlab.rebirthmonkey.com/lab/app/frontend:$CI_COMMIT_SHORT_SHA
-    - /kaniko/executor --dockerfile=Dockerfile --context=$(pwd)/backend --destination=registry.gitlab.rebirthmonkey.com/lab/app/backend:$CI_COMMIT_SHORT_SHA
-    - sed -i "s/TAG_TO_BE_REPLACED/$CI_COMMIT_SHORT_SHA/g" $(pwd)/helm/values.yaml
+    - /kaniko/executor --dockerfile=Dockerfile --context=$(pwd)/frontend --destination=registry.gitlab.rebirthmonkey.com/lab/app/frontend:v0.0.1
+    - /kaniko/executor --dockerfile=Dockerfile --context=$(pwd)/backend --destination=registry.gitlab.rebirthmonkey.com/lab/app/backend:v0.0.1
 
 
